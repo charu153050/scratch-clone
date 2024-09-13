@@ -1,8 +1,36 @@
-import React from "react";
+import React, { useRef } from "react";
 
-export default function CatSprite({ position, rotation }) {
+export default function CatSprite({ position, rotation, setPosition }) {
+  const svgRef = useRef(null);
+
+  const handleMouseDown = (e) => {
+    
+    const target = svgRef.current;
+    if (!target) return;
+
+    const startX = e.clientX;
+    const startY = e.clientY;
+    const initialX = position.x;
+    const initialY = position.y;
+
+    const handleMouseMove = (e) => {
+      const dx = e.clientX - startX;
+      const dy = e.clientY - startY;
+      setPosition({ x: initialX + dx, y: initialY + dy });
+    };
+
+    const handleMouseUp = () => {
+      document.removeEventListener("mousemove", handleMouseMove);
+      document.removeEventListener("mouseup", handleMouseUp);
+    };
+
+    document.addEventListener("mousemove", handleMouseMove);
+    document.addEventListener("mouseup", handleMouseUp);
+  };
+
   return (
     <svg
+      ref={svgRef}
       xmlns="http://www.w3.org/2000/svg"
       width="95.17898101806641"
       height="100.04156036376953"
@@ -10,6 +38,8 @@ export default function CatSprite({ position, rotation }) {
       version="1.1"
       xmlSpace="preserve"
       transform={`translate(${position.x}, ${position.y}) rotate(${rotation})`}
+      onMouseDown={handleMouseDown}
+      style={{ cursor: "pointer", position: "absolute" }}
     >
       <g>
         <g id="Page-1" stroke="none" fillRule="evenodd">
