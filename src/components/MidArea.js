@@ -3,14 +3,14 @@ import DropArea from "./DropArea";
 import Icon from "./Icon";
 
 export default function MidArea({ activeCard, moveRight, handleRotate }) {
-  const [items, setItems] = useState([]);
+  const [cardIds, setCardIds] = useState([]);
   const onDrop = (position) => {
     // console.log(`${activeCard} at position ${position}`);
     if (activeCard === null || activeCard === undefined) return;
 
-    const newItems = [...items];
-    newItems.splice(position, 0, activeCard);
-    setItems(newItems);
+    const newCardsId = [...cardIds];
+    newCardsId.splice(position, 0, activeCard);
+    setCardIds(newCardsId);
   };
 
   const renderCard = (cardId, moveRight) => {
@@ -68,10 +68,10 @@ export default function MidArea({ activeCard, moveRight, handleRotate }) {
   return (
     <div className="h-full overflow-auto">
       <DropArea onDrop={() => onDrop(0)} />
-      {items.map((item, index) => {
+      {cardIds.map((cardId, index) => {
         return (
           <div key={index}>
-            {renderCard(item, moveRight, handleRotate)}
+            {renderCard(cardId, moveRight, handleRotate)}
             <DropArea onDrop={() => onDrop(index + 1)} />
           </div>
         );
