@@ -1,10 +1,10 @@
 import React from "react";
 import CatSprite from "./CatSprite";
 
-export default function PreviewArea() {
+export default function PreviewArea({position, rotation}) {
   return (
-    <div className="flex-none h-full overflow-y-auto p-2">
-      <CatSprite />
+    <div className="flex-none h-full p-2">
+      <CatSprite position={position} rotation={rotation} />
     </div>
   );
 }
