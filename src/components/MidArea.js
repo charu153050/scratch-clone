@@ -8,7 +8,6 @@ export default function MidArea({
   handleRotate,
   resetPage,
   intervalIdRef,
-  
 }) {
   const [cardIds, setCardIds] = useState([]);
   const onDrop = (position) => {
@@ -27,7 +26,6 @@ export default function MidArea({
   const runAllFunction = () => {
     cardIds.forEach((id) => {
       if (id == 2) {
-        
         moveRight10Steps();
       }
       if (id == 3) {
@@ -43,7 +41,6 @@ export default function MidArea({
     intervalIdRef.current = setInterval(() => {
       cardIds.forEach((id) => {
         if (id == 2) {
-          
           moveRight10Steps();
         }
         if (id == 3) {
@@ -122,26 +119,25 @@ export default function MidArea({
           </div>
         );
       })}
-      <div className="inline-flex rounded-md shadow-sm">
+      <div className="inline-flex rounded-md shadow-sm ">
         <button
-          className=" bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded py-1 px-2 text-xs  "
+          className=" bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded py-1 px-2 text-xs mx-1 "
           onClick={runAllFunction}
         >
           Play
         </button>
         <button
-          className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded py-1 px-2 text-xs"
+          className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded py-1 px-2 text-xs mx-1"
           onClick={resetPage}
         >
           Reset
         </button>
         <button
-          className=" bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded py-1 px-2 text-xs"
+          className=" bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded py-1 px-2 text-xs mx-1"
           onClick={runAllFunction2}
         >
           Repeat
         </button>
-      
       </div>
     </div>
   );
