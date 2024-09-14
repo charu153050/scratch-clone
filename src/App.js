@@ -1,43 +1,58 @@
-import React, { useState,useRef } from "react";
+import React, { useRef, useState } from "react";
 import MidArea from "./components/MidArea";
 import PreviewArea from "./components/PreviewArea";
 import Sidebar from "./components/Sidebar";
- 
+
 export default function App() {
-  // let intervalId;
+
   const [midPage, setMidPage] = useState("cat");
   const [activeCard, setActiveCard] = useState(null);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [rotation, setRotation] = useState(0);
-  const [ballPosition, setBallPosition] = useState({x: 50, y: 50})
+  const [ballPosition, setBallPosition] = useState({ x: 50, y: 50 });
   const [ballRotation, setBallRotation] = useState(0);
   const intervalIdRef = useRef(null);
- 
+  const intervalIdRefBall = useRef(null);
+
   const moveRight = (steps) => {
-    setPosition((prevPosition) => ({
-      ...prevPosition,
-      x: prevPosition.x + steps,
-    }));
-  };
- 
-  const handleRotate = (angle) => {
-    setRotation((prevRotation) => prevRotation + angle); // Rotate by 15 degrees
-  };
-  const stopFunction = () => {
-    if (intervalIdRef.current) {
-      clearInterval(intervalIdRef.current);
-      intervalIdRef.current = null;
-      console.log('Interval stopped');
+    if (midPage == "cat") {
+      setPosition((prevPosition) => ({
+        ...prevPosition,
+        x: prevPosition.x + steps,
+      }));
+    } else {
+      setBallPosition((prevPosition) => ({
+        ...prevPosition,
+        x: prevPosition.x + steps,
+      }));
     }
   };
- 
- 
+
+  const handleRotate = (angle) => {
+    if (midPage == cat) {
+      setRotation((prevRotation) => prevRotation + angle);
+    } else {
+      setBallRotation((prevRotation) => prevRotation + angle);
+    }
+  };
+  const stopFunction = () => {
+    if (intervalIdRef.current || intervalIdRefBall.current) {
+      clearInterval(intervalIdRef.current);
+      intervalIdRef.current = null;
+      clearInterval(intervalIdRefBall.current);
+      intervalIdRefBall.current = null;
+      console.log("Interval stopped");
+    }
+  };
+
   const resetPage = () => {
     stopFunction();
     setPosition({ x: 0, y: 0 });
     setRotation(0);
+    setBallPosition({ x: 50, y: 50 });
+    setBallRotation(0);
   };
- 
+
   return (
     <div className="bg-blue-100 pt-6 font-sans">
       <div className="h-screen overflow-hidden flex flex-row  ">
@@ -49,6 +64,7 @@ export default function App() {
             handleRotate={handleRotate}
             resetPage={resetPage}
             intervalIdRef={intervalIdRef}
+            intervalIdRefBall={intervalIdRefBall}
             page={midPage}
           />
         </div>

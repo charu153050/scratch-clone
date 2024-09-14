@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import DropArea from "./DropArea";
 import Icon from "./Icon";
- 
+
 export default function MidArea({
   activeCard,
   moveRight,
   handleRotate,
   resetPage,
   intervalIdRef,
+  intervalIdRefBall,
   page,
 }) {
   const [cardIds, setCardIds] = useState([]);
@@ -15,7 +16,7 @@ export default function MidArea({
   const onDrop = (position) => {
     // console.log(`${activeCard} at position ${position}`);
     if (activeCard === null || activeCard === undefined) return;
- 
+
     if (page === "cat") {
       const newCardsId = [...cardIds];
       newCardsId.splice(position, 0, activeCard);
@@ -26,27 +27,13 @@ export default function MidArea({
       setBallCardIds(newCardsId);
     }
   };
- 
+
   const moveRight10Steps = () => moveRight(10);
   const rotateRightWith15Degree = () => handleRotate(15);
   const rotateLeftWith15Degree = () => handleRotate(-15);
- 
+
   const runAllFunction = () => {
-    cardIds.forEach((id) => {
-      if (id == 2) {
-        moveRight10Steps();
-      }
-      if (id == 3) {
-        rotateLeftWith15Degree();
-      }
-      if (id == 4) {
-        rotateRightWith15Degree();
-      }
-    });
-  };
- 
-  const runAllFunction2 = () => {
-    intervalIdRef.current = setInterval(() => {
+    if (page === "cat") {
       cardIds.forEach((id) => {
         if (id == 2) {
           moveRight10Steps();
@@ -58,9 +45,54 @@ export default function MidArea({
           rotateRightWith15Degree();
         }
       });
-    }, 1000); // Adjust the interval time (in milliseconds) as needed
+    } else {
+      ballCardIds.forEach((id) => {
+        if (id == 2) {
+          moveRight10Steps();
+        }
+        if (id == 3) {
+          rotateLeftWith15Degree();
+        }
+        if (id == 4) {
+          rotateRightWith15Degree();
+        }
+      });
+    }
   };
- 
+
+  const runAllFunction2 = () => {
+    if(page== "cat"){
+      intervalIdRef.current = setInterval(() => {
+        cardIds.forEach((id) => {
+          if (id == 2) {
+            moveRight10Steps();
+          }
+          if (id == 3) {
+            rotateLeftWith15Degree();
+          }
+          if (id == 4) {
+            rotateRightWith15Degree();
+          }
+        });
+      }, 1000); // Adjust the interval time (in milliseconds) as needed
+    }else{
+      intervalIdRefBall.current = setInterval(() => {
+        cardIds.forEach((id) => {
+          if (id == 2) {
+            moveRight10Steps();
+          }
+          if (id == 3) {
+            rotateLeftWith15Degree();
+          }
+          if (id == 4) {
+            rotateRightWith15Degree();
+          }
+        });
+      }, 1000); // Adjust the interval time (in milliseconds) as needed
+    }
+   
+  };
+
   const renderCard = (cardId, moveRight) => {
     switch (cardId) {
       case "0":
@@ -115,7 +147,7 @@ export default function MidArea({
         return null;
     }
   };
- 
+
   return (
     <div className="h-full overflow-auto relative min-h-screen ml-16">
       <DropArea onDrop={() => onDrop(0)} />
@@ -160,4 +192,3 @@ export default function MidArea({
     </div>
   );
 }
- 
