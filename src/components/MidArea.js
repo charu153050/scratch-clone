@@ -122,7 +122,7 @@ export default function MidArea({
           </div>
         );
       })}
-      <div className="absolute bottom-4 right-0 flex flex-col items-end space-y-4 ml-4">
+      <div className="inline-flex rounded-md shadow-sm">
         <button
           className=" bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded py-1 px-2 text-xs  "
           onClick={runAllFunction}
