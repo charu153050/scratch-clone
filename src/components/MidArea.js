@@ -1,28 +1,36 @@
 import React, { useState } from "react";
 import DropArea from "./DropArea";
 import Icon from "./Icon";
-
+ 
 export default function MidArea({
   activeCard,
   moveRight,
   handleRotate,
   resetPage,
   intervalIdRef,
+  page,
 }) {
   const [cardIds, setCardIds] = useState([]);
+  const [ballCardIds, setBallCardIds] = useState([]);
   const onDrop = (position) => {
     // console.log(`${activeCard} at position ${position}`);
     if (activeCard === null || activeCard === undefined) return;
-
-    const newCardsId = [...cardIds];
-    newCardsId.splice(position, 0, activeCard);
-    setCardIds(newCardsId);
+ 
+    if (page === "cat") {
+      const newCardsId = [...cardIds];
+      newCardsId.splice(position, 0, activeCard);
+      setCardIds(newCardsId);
+    } else if (page === "ball") {
+      const newCardsId = [...ballCardIds];
+      newCardsId.splice(position, 0, activeCard);
+      setBallCardIds(newCardsId);
+    }
   };
-
+ 
   const moveRight10Steps = () => moveRight(10);
   const rotateRightWith15Degree = () => handleRotate(15);
   const rotateLeftWith15Degree = () => handleRotate(-15);
-
+ 
   const runAllFunction = () => {
     cardIds.forEach((id) => {
       if (id == 2) {
@@ -36,7 +44,7 @@ export default function MidArea({
       }
     });
   };
-
+ 
   const runAllFunction2 = () => {
     intervalIdRef.current = setInterval(() => {
       cardIds.forEach((id) => {
@@ -52,7 +60,7 @@ export default function MidArea({
       });
     }, 1000); // Adjust the interval time (in milliseconds) as needed
   };
-
+ 
   const renderCard = (cardId, moveRight) => {
     switch (cardId) {
       case "0":
@@ -107,18 +115,28 @@ export default function MidArea({
         return null;
     }
   };
-
+ 
   return (
     <div className="h-full overflow-auto relative min-h-screen ml-16">
       <DropArea onDrop={() => onDrop(0)} />
-      {cardIds.map((cardId, index) => {
-        return (
-          <div key={index}>
-            {renderCard(cardId, moveRight, handleRotate)}
-            <DropArea onDrop={() => onDrop(index + 1)} />
-          </div>
-        );
-      })}
+      {page === "cat" &&
+        cardIds.map((cardId, index) => {
+          return (
+            <div key={index}>
+              {renderCard(cardId, moveRight, handleRotate)}
+              <DropArea onDrop={() => onDrop(index + 1)} />
+            </div>
+          );
+        })}
+      {page === "ball" &&
+        ballCardIds.map((cardId, index) => {
+          return (
+            <div key={index}>
+              {renderCard(cardId, moveRight, handleRotate)}
+              <DropArea onDrop={() => onDrop(index + 1)} />
+            </div>
+          );
+        })}
       <div className="inline-flex rounded-md shadow-sm ">
         <button
           className=" bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded py-1 px-2 text-xs mx-1 "
@@ -142,3 +160,4 @@ export default function MidArea({
     </div>
   );
 }
+ 
