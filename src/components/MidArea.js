@@ -7,6 +7,8 @@ export default function MidArea({
   moveRight,
   handleRotate,
   resetPage,
+  intervalIdRef,
+  
 }) {
   const [cardIds, setCardIds] = useState([]);
   const onDrop = (position) => {
@@ -25,7 +27,7 @@ export default function MidArea({
   const runAllFunction = () => {
     cardIds.forEach((id) => {
       if (id == 2) {
-        console.log(id);
+        
         moveRight10Steps();
       }
       if (id == 3) {
@@ -35,6 +37,23 @@ export default function MidArea({
         rotateRightWith15Degree();
       }
     });
+  };
+
+  const runAllFunction2 = () => {
+    intervalIdRef.current = setInterval(() => {
+      cardIds.forEach((id) => {
+        if (id == 2) {
+          
+          moveRight10Steps();
+        }
+        if (id == 3) {
+          rotateLeftWith15Degree();
+        }
+        if (id == 4) {
+          rotateRightWith15Degree();
+        }
+      });
+    }, 1000); // Adjust the interval time (in milliseconds) as needed
   };
 
   const renderCard = (cardId, moveRight) => {
@@ -93,7 +112,7 @@ export default function MidArea({
   };
 
   return (
-    <div className="h-full overflow-auto relative min-h-screen">
+    <div className="h-full overflow-auto relative min-h-screen ml-16">
       <DropArea onDrop={() => onDrop(0)} />
       {cardIds.map((cardId, index) => {
         return (
@@ -103,17 +122,26 @@ export default function MidArea({
           </div>
         );
       })}
-      <div className="absolute bottom-4 right-0 flex flex-col items-end space-y-4 ml-16">
-        <button className="  bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded py-1 px-2 text-xs  "
-        onClick={runAllFunction}>
+      <div className="absolute bottom-4 right-0 flex flex-col items-end space-y-4 ml-4">
+        <button
+          className=" bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded py-1 px-2 text-xs  "
+          onClick={runAllFunction}
+        >
           Play
         </button>
         <button
-          className=" bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded py-1 px-2 text-xs"
+          className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded py-1 px-2 text-xs"
           onClick={resetPage}
         >
           Reset
         </button>
+        <button
+          className=" bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded py-1 px-2 text-xs"
+          onClick={runAllFunction2}
+        >
+          Repeat
+        </button>
+      
       </div>
     </div>
   );
