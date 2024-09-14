@@ -52,6 +52,7 @@ export default function Sidebar({ setActiveCard }) {
         <Icon name="redo" size={15} className="text-white mx-2" />
         {"15 degrees"}
       </div>
+      
     </div>
   );
 }

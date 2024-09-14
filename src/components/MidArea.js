@@ -1,45 +1,50 @@
 import React, { useState } from "react";
 import DropArea from "./DropArea";
 import Icon from "./Icon";
- 
-export default function MidArea({ activeCard, moveRight, handleRotate }) {
+
+export default function MidArea({
+  activeCard,
+  moveRight,
+  handleRotate,
+  resetPage,
+}) {
   const [cardIds, setCardIds] = useState([]);
   const onDrop = (position) => {
     // console.log(`${activeCard} at position ${position}`);
     if (activeCard === null || activeCard === undefined) return;
- 
+
     const newCardsId = [...cardIds];
     newCardsId.splice(position, 0, activeCard);
     setCardIds(newCardsId);
   };
- 
+
   const moveRight10Steps = () => moveRight(10);
   const rotateRightWith15Degree = () => handleRotate(15);
   const rotateLeftWith15Degree = () => handleRotate(-15);
- 
+
   const runAllFunction = () => {
-    // console.log("fun run");
-    // console.log(cardIds);
-    cardIds.forEach(id => {
-      // console.log(id)
-      if(id == 2) {
+    cardIds.forEach((id) => {
+      if (id == 2) {
         console.log(id);
-        moveRight10Steps()
-      };
+        moveRight10Steps();
+      }
       if (id == 3) {
-        rotateLeftWith15Degree()
-      };
+        rotateLeftWith15Degree();
+      }
       if (id == 4) {
-        rotateRightWith15Degree()
-      };
-    })
-  }
- 
+        rotateRightWith15Degree();
+      }
+    });
+  };
+
   const renderCard = (cardId, moveRight) => {
     switch (cardId) {
       case "0":
         return (
-          <div className="flex flex-row flex-wrap bg-yellow-500 text-white px-2 py-1 text-sm cursor-pointer" onClick={runAllFunction}>
+          <div
+            className="flex flex-row flex-wrap bg-yellow-500 text-white px-2 py-1 text-sm cursor-pointer"
+            onClick={runAllFunction}
+          >
             {"When "}
             <Icon name="flag" size={15} className="text-green-600 mx-2" />
             {"clicked"}
@@ -86,9 +91,9 @@ export default function MidArea({ activeCard, moveRight, handleRotate }) {
         return null;
     }
   };
- 
+
   return (
-    <div className="h-full overflow-auto">
+    <div className="h-full overflow-auto relative min-h-screen">
       <DropArea onDrop={() => onDrop(0)} />
       {cardIds.map((cardId, index) => {
         return (
@@ -98,7 +103,18 @@ export default function MidArea({ activeCard, moveRight, handleRotate }) {
           </div>
         );
       })}
+      <div className="absolute bottom-4 right-0 flex flex-col items-end space-y-4 ml-16">
+        <button className="  bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded py-1 px-2 text-xs  "
+        onClick={runAllFunction}>
+          Play
+        </button>
+        <button
+          className=" bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded py-1 px-2 text-xs"
+          onClick={resetPage}
+        >
+          Reset
+        </button>
+      </div>
     </div>
   );
 }
- 
