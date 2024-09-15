@@ -4,18 +4,19 @@ import PreviewArea from "./components/PreviewArea";
 import Sidebar from "./components/Sidebar";
 
 export default function App() {
-
   const [midPage, setMidPage] = useState("cat");
   const [activeCard, setActiveCard] = useState(null);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [rotation, setRotation] = useState(0);
-  const [ballPosition, setBallPosition] = useState({ x: 50, y: 50 });
+  const [ballPosition, setBallPosition] = useState({ x: 90, y: 90 });
   const [ballRotation, setBallRotation] = useState(0);
   const intervalIdRef = useRef(null);
   const intervalIdRefBall = useRef(null);
+  const [cardIds, setCardIds] = useState([]);
+  const [ballCardIds, setBallCardIds] = useState([]);
 
   const moveRight = (steps) => {
-    if (midPage == "cat") {
+    if (midPage === "cat") {
       setPosition((prevPosition) => ({
         ...prevPosition,
         x: prevPosition.x + steps,
@@ -29,7 +30,7 @@ export default function App() {
   };
 
   const handleRotate = (angle) => {
-    if (midPage == cat) {
+    if (midPage === "cat") {
       setRotation((prevRotation) => prevRotation + angle);
     } else {
       setBallRotation((prevRotation) => prevRotation + angle);
@@ -49,7 +50,7 @@ export default function App() {
     stopFunction();
     setPosition({ x: 0, y: 0 });
     setRotation(0);
-    setBallPosition({ x: 50, y: 50 });
+    setBallPosition({ x: 0, y: 0});
     setBallRotation(0);
   };
 
@@ -66,6 +67,10 @@ export default function App() {
             intervalIdRef={intervalIdRef}
             intervalIdRefBall={intervalIdRefBall}
             page={midPage}
+            cardIds={cardIds}
+            setCardIds={setCardIds}
+            ballCardIds={ballCardIds}
+            setBallCardIds={setBallCardIds}
           />
         </div>
         <div className="w-1/3 h-screen overflow-hidden flex flex-row bg-white border-t border-l border-gray-200 rounded-tl-xl ml-2">
@@ -78,6 +83,10 @@ export default function App() {
             ballPosition={ballPosition}
             setBallPosition={setBallPosition}
             ballRotation={ballRotation}
+            cardIds={cardIds}
+            setCardIds={setCardIds}
+            ballCardIds={ballCardIds}
+            setBallCardIds={setBallCardIds}
           />
         </div>
       </div>

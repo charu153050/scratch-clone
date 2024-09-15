@@ -10,9 +10,13 @@ export default function MidArea({
   intervalIdRef,
   intervalIdRefBall,
   page,
+  cardIds,
+  setCardIds,
+  ballCardIds,
+  setBallCardIds
 }) {
-  const [cardIds, setCardIds] = useState([]);
-  const [ballCardIds, setBallCardIds] = useState([]);
+  // const [cardIds, setCardIds] = useState([]);
+  // const [ballCardIds, setBallCardIds] = useState([]);
   const onDrop = (position) => {
     // console.log(`${activeCard} at position ${position}`);
     if (activeCard === null || activeCard === undefined) return;
@@ -61,7 +65,7 @@ export default function MidArea({
   };
 
   const runAllFunction2 = () => {
-    if(page== "cat"){
+    if (page === "cat") {
       intervalIdRef.current = setInterval(() => {
         cardIds.forEach((id) => {
           if (id == 2) {
@@ -75,9 +79,9 @@ export default function MidArea({
           }
         });
       }, 1000); // Adjust the interval time (in milliseconds) as needed
-    }else{
+    } else {
       intervalIdRefBall.current = setInterval(() => {
-        cardIds.forEach((id) => {
+        ballCardIds.forEach((id) => {
           if (id == 2) {
             moveRight10Steps();
           }
@@ -90,7 +94,6 @@ export default function MidArea({
         });
       }, 1000); // Adjust the interval time (in milliseconds) as needed
     }
-   
   };
 
   const renderCard = (cardId, moveRight) => {

@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import CatSprite from "./CatSprite";
 import BallSprite from "./BallSprite";
- 
+import CatSprite from "./CatSprite";
+import HeroFeature from "./HeroFeature";
+
 export default function PreviewArea({
   position,
   rotation,
@@ -11,8 +12,13 @@ export default function PreviewArea({
   ballPosition,
   setBallPosition,
   ballRotation,
+  cardIds,
+  setCardIds,
+  ballCardIds,
+  setBallCardIds,
 }) {
   const [plusButtonClicked, setPlusButtonClicked] = useState(false);
+
   return (
     <div className="flex-none w-full h-full p-2 relative">
       <CatSprite
@@ -45,7 +51,7 @@ export default function PreviewArea({
           className="w-1/2 rounded overflow-hidden shadow-lg bg-white p-2 cursor-pointer"
           onClick={() => setMidPage("cat")}
         >
-          <p className="text-gray-700 text-sm ">
+          <p className="text-gray-700 text-sm hover:bg-blue-200">
             Cat
             {/* <CatSprite
               position={{ x: 0, y: 0 }}
@@ -56,7 +62,7 @@ export default function PreviewArea({
         </div>
         {/* Card 2 */}
         <div
-          className="w-1/2 rounded overflow-hidden shadow-lg bg-white p-2 cursor-pointer"
+          className="w-1/2 rounded overflow-hidden shadow-lg bg-white p-2 cursor-pointer hover:bg-blue-200"
           onClick={() => {
             setMidPage("ball");
             setPlusButtonClicked(true);
@@ -69,7 +75,15 @@ export default function PreviewArea({
           )}
         </div>
       </div>
+
+      <HeroFeature
+        position={position}
+        ballPosition={ballPosition}
+        cardIds={cardIds}
+        setCardIds={setCardIds}
+        ballCardIds={ballCardIds}
+        setBallCardIds={setBallCardIds}
+      />
     </div>
   );
 }
- 
